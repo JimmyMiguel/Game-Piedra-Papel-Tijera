@@ -6,7 +6,9 @@
 
   connectedCallback() {
     this.render();
+    this.temporizadorCom(5)
     this.gameLogic();
+    this.randomFun()
    }
 
   render() {
@@ -21,8 +23,7 @@
         .container {
             width: 100%;
             height: 100vh;
-            padding: 80px 0px 0px 0px;
-            font-family: "Odibee Sans", sans-serif;
+             font-family: "Odibee Sans", sans-serif;
             letter-spacing: 4px;
             background-image: url('/src/assets/fondo-azul.jpg');
             background-repeat: round;
@@ -101,16 +102,51 @@
                 all: unset
 
         }
+        .piedra-container, .papel-container, .tijera-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                margin: 10px 0;
+              }
+
+        .piedra-image, .papel-image, .tijera-image {
+                width: 150px;
+                height: 150px;
+                display: block;
+                margin: 0 auto;
+                object-fit: contain;
+                border-radius: 8px;
+                transition: transform 0.3s ease;
+                transform:rotate(180deg);
+              }
+                        .hand-game{
+                width: 150px;
+                height: 150px;
+                display: block;
+                margin: 0 auto;
+                object-fit: contain;
+                border-radius: 8px;
+                transition: transform 0.3s ease;
+                transform: scale(1.1);
+
+               }
+
+        .piedra-image:hover, .papel-image:hover, .tijera-image:hover {
+                transform: scale(1.1);
+              }
 
         .hands {
-          display: flex;
-          justify-content: center;
-          gap: 24px;
-          margin-top: 40px;
-          width:100%;
-          height: 115px;
-          overflow: hidden;
-         }
+              display: flex;
+              justify-content: center;
+              gap: 24px;
+              margin-top: 40px;
+              width:100%;
+              height: 115px;
+              overflow: hidden;
+            }
 
       </style>
 
@@ -118,12 +154,11 @@
 
 
         <div class="randomHand">
-        tiempo estimad
         </div>
 
 
         <div class="circle">
-            <span class="countdown">5</span>
+            <span class="countdown"></span>
         </div>
 
         <div class="hands">
@@ -137,42 +172,124 @@
 
   gameLogic() {
     const piedraButton = this.shadowRoot?.querySelector(".btn-piedra");
+    if (!this.shadowRoot?.querySelector(".hands") ) return
+    const handsCom = this.shadowRoot?.querySelector(".hands") 
     piedraButton?.addEventListener("click", () => {
-      console.log("muy bien aplastate un piedra");
-      this.randomFun()
+    handsCom!.innerHTML= '';      
+    handsCom!.innerHTML= `
+    <piedra-com class=".hand-game" ></piedra-com>
+    ` 
+       const aleatorio = this.randomFun()
+      this.mostrarJugadaComputadora(aleatorio);
     });
 
-    const papelButton = this.shadowRoot?.querySelector(".btn-papel");
-    papelButton?.addEventListener("click", () => {
-      console.log("muy bien aplastate un  papel");
-    });
 
-    const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
-    tijeraButton?.addEventListener("click", () => {
-      console.log("muy bien aplastate un tijera");
-    });
+      const papelButton = this.shadowRoot?.querySelector(".btn-papel");
+    if (!this.shadowRoot?.querySelector(".hands") ) return
+    const hands2Com = this.shadowRoot?.querySelector(".hands") 
+
+      papelButton?.addEventListener("click", () => {
+        console.log("muy bien aplastate un papel");
+        hands2Com!.innerHTML= '';      
+        hands2Com!.innerHTML= `
+        <papel-com class=".hand-game" ></papel-com>
+        ` 
+        const aleatorio = this.randomFun();
+        this.mostrarJugadaComputadora(aleatorio);
+      });
+
+      const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
+      if(!this.shadowRoot.querySelector(".hands")) return
+      const hands3 = this.shadowRoot.querySelector(".hands")
+
+      tijeraButton?.addEventListener("click", () => {
+        console.log("muy bien aplastate un tijera");
+        hands3!.innerHTML=''
+        hands3!.innerHTML = `
+        <tijera-com class=".hand-game" ></tijera-com>
+        `
+        const aleatorio = this.randomFun();
+        this.mostrarJugadaComputadora(aleatorio);
+      });
+
+
   }
 
-  randomFun() {
+  randomFun():string {
     const opciones = ["piedra", "papel", "tijera"];
     function palabraAlAzar(arr: string[]): string {
       const indice = Math.floor(Math.random() * arr.length);
       return arr[indice];
     }
     const jugadaComputadora = palabraAlAzar(opciones);
-
-    if (jugadaComputadora === "piedra") {
-        const place = this.shadowRoot?.querySelector(".randomHand");
-
-        const piedraCom = document.createElement("piedra-com");
-        place?.innerHTML=
-        place?.appendChild(piedraCom);
-    }
-
-
-
-    
+    return jugadaComputadora
   }
+
+// Función para mostrar la jugada de la computadora
+mostrarJugadaComputadora(jugadaComputadora: string) {
+  const randomHandContainer = this.shadowRoot?.querySelector(".randomHand");
+  if (!randomHandContainer) return;
+
+  // Limpiar contenido anterior
+  randomHandContainer.innerHTML = '';
+
+  // Crear HTML según la jugada
+  let htmlContent = '';
+  
+  if (jugadaComputadora === "piedra") {
+    htmlContent = `
+      <div class="piedra-container">
+        <img src="/src/assets/piedra.png" alt="Piedra" class="piedra-image">
+      </div>
+    `;
+  } else if (jugadaComputadora === "papel") {
+    htmlContent = `
+      <div class="papel-container">
+        <img src="/src/assets/papel.png" alt="Papel" class="papel-image">
+      </div>
+    `;
+  } else if (jugadaComputadora === "tijera") {
+    htmlContent = `
+      <div class="tijera-container">
+        <img src="/src/assets/tijera.png" alt="Tijera" class="tijera-image">
+      </div>
+    `;
+  }
+
+  // Aplicar el HTML al contenedor
+  randomHandContainer.innerHTML = htmlContent;
+}
+
+temporizadorCom (segundos:number){
+ const contador = this.shadowRoot?.querySelector(".countdown")
+ if (segundos >= 0 ) {
+   contador!.textContent = `${segundos}`
+  setTimeout(() => {
+     this.temporizadorCom(segundos-1)
+  }, 1000)
+  }
+
+  else {
+    const alerta = this.shadowRoot?.querySelector(".container");
+    if (alerta) {
+      alerta.innerHTML = `
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
+          <div style="background-color: white; padding: 40px; border-radius: 10px; text-align: center;">
+            <h2 style="margin: 0 0 20px 0; color: #001997;">¡Se te acabó el tiempo!</h2>
+            <button id="reiniciarJuego" style="font-size: 20px; padding: 10px 20px; background-color: #005CFF; color: white; border: none; border-radius: 5px; cursor: pointer;">JUGAR</button>
+          </div>
+        </div>
+      `;
+      
+      const btnJugar = this.shadowRoot?.querySelector("#reiniciarJuego");
+      btnJugar?.addEventListener("click", () => {
+        this.render()
+        this.gameLogic()
+        this.temporizadorCom(5);
+      });
+    }
+  }
+}
 }
 
 customElements.define("game-com", gameCom);
