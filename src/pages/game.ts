@@ -1,14 +1,15 @@
- export class gameCom extends HTMLElement {
+export class gameCom extends HTMLElement {
+  timeoutId: number | undefined
+
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-  }
+   }
 
   connectedCallback() {
     this.render();
     this.temporizadorCom(5)
     this.gameLogic();
-    this.randomFun()
    }
 
   render() {
@@ -134,19 +135,24 @@
 
                }
 
+                .hand-game.agrandado {
+                transform: scale(1.5);
+                transition: transform 0.2s ease;
+              }
+
         .piedra-image:hover, .papel-image:hover, .tijera-image:hover {
                 transform: scale(1.1);
               }
 
         .hands {
-              display: flex;
-              justify-content: center;
-              gap: 24px;
-              margin-top: 40px;
-              width:100%;
-              height: 115px;
-              overflow: hidden;
-            }
+          display: flex;
+          justify-content: center;
+          gap: 24px;
+          margin-top: 40px;
+          width: 100%;
+          height: 250px;        /* ✅ Aumentar el height */
+          overflow: visible;    /* ✅ Cambiar de hidden a visible */
+        }
 
       </style>
 
@@ -177,10 +183,14 @@
     piedraButton?.addEventListener("click", () => {
     handsCom!.innerHTML= '';      
     handsCom!.innerHTML= `
-    <piedra-com class=".hand-game" ></piedra-com>
+    <piedra-com class="hand-game agrandado" ></piedra-com>
     ` 
        const aleatorio = this.randomFun()
       this.mostrarJugadaComputadora(aleatorio);
+       clearTimeout(this.timeoutId)
+       const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+       circle?.style.setProperty("display", "none");
+
     });
 
 
@@ -192,10 +202,14 @@
         console.log("muy bien aplastate un papel");
         hands2Com!.innerHTML= '';      
         hands2Com!.innerHTML= `
-        <papel-com class=".hand-game" ></papel-com>
+        <papel-com class="hand-game agrandado" ></papel-com>
         ` 
         const aleatorio = this.randomFun();
         this.mostrarJugadaComputadora(aleatorio);
+        clearTimeout(this.timeoutId)
+        const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+        circle?.style.setProperty("display", "none");
+
       });
 
       const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
@@ -206,10 +220,14 @@
         console.log("muy bien aplastate un tijera");
         hands3!.innerHTML=''
         hands3!.innerHTML = `
-        <tijera-com class=".hand-game" ></tijera-com>
+        <tijera-com class="hand-game agrandado" ></tijera-com>
         `
         const aleatorio = this.randomFun();
         this.mostrarJugadaComputadora(aleatorio);
+        clearTimeout(this.timeoutId)
+        const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+        circle?.style.setProperty("display", "none");
+
       });
 
 
@@ -260,11 +278,13 @@ mostrarJugadaComputadora(jugadaComputadora: string) {
   randomHandContainer.innerHTML = htmlContent;
 }
 
-temporizadorCom (segundos:number){
+ 
+temporizadorCom (segundos:number) {
+  clearTimeout(this.timeoutId)
  const contador = this.shadowRoot?.querySelector(".countdown")
  if (segundos >= 0 ) {
    contador!.textContent = `${segundos}`
-  setTimeout(() => {
+    this.timeoutId = setTimeout(() => {
      this.temporizadorCom(segundos-1)
   }, 1000)
   }
@@ -290,6 +310,7 @@ temporizadorCom (segundos:number){
     }
   }
 }
+ 
 }
 
 customElements.define("game-com", gameCom);
