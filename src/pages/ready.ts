@@ -1,4 +1,4 @@
-import { goTo } from "../routes";
+import { goTo } from "../router";
 import "../components/botonCom"
 
 export class readyCom extends HTMLElement {
@@ -73,7 +73,7 @@ export class readyCom extends HTMLElement {
     const startButton = this.shadowRoot.querySelector("#startBtn");
     startButton?.addEventListener("click", () => {
       goTo("/gameCom")
-       
+
     });
   }
 }

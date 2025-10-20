@@ -1,5 +1,5 @@
-import "../routes";
-import { goTo } from "../routes";
+import "../router";
+import { goTo } from "../router";
 import "../components/botonCom"
 import "../components/tijeraCom"
 import "../components/papelCom"

@@ -1,6 +1,7 @@
 import   "./pages/ready";
 import  "./pages/welcome";
 import "./pages/game"
+import "./pages/ganador"
 // --- Tipos y Rutas (a nivel de módulo) ---
 type Route = {
   path: RegExp;
@@ -30,6 +31,13 @@ const routes: Route[] = [
     action: () => {
       const readycom = document.createElement("game-com");
       return readycom;
+    },
+  },
+  {
+    path: /^\/ganador$/,
+    action: () => {
+      const ganadorCom = document.createElement("game-over-screen");
+      return ganadorCom;
     },
   },
  
