@@ -1,3 +1,6 @@
+import { goTo } from "../router";
+import { state } from "../state";
+
 export class gameCom extends HTMLElement {
   timeoutId: number | undefined
 
@@ -190,6 +193,9 @@ export class gameCom extends HTMLElement {
        clearTimeout(this.timeoutId)
        const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
        circle?.style.setProperty("display", "none");
+       state.setState("piedra",aleatorio)
+       goTo("/ganador")
+
 
     });
 

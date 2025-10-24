@@ -16,7 +16,7 @@ partidasGanadas: {
 }
 ,
 
-winGame(jugador:Opcion, computadora:Opcion){
+winGame(jugador:Opcion, computadora:string){
  
  if (jugador === computadora) return "Empate";
 
@@ -42,7 +42,7 @@ getState() {
 
 
 
-  setState(accionJugador:Opcion, accionCompu:Opcion) {
+  setState(accionJugador:Opcion, accionCompu:string) {
 
     this.winGame(accionJugador, accionCompu)
     for (const callback of this.listener) {
