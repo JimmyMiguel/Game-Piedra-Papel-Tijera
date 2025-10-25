@@ -1,9 +1,10 @@
 import { goTo } from "../router";
+import { state } from "../state";
 class GameOverScreen extends HTMLElement {
     // Propiedades que se pueden configurar a través de atributos HTML
     private resultText: string = 'PERDISTE';
-    private playerScore: string = '0';
-    private machineScore: string = '0';
+    private playerScore: number = 0;
+    private machineScore: number = 0;
     private buttonText: string = 'Volver a Jugar';
   
     constructor() {
@@ -20,9 +21,13 @@ class GameOverScreen extends HTMLElement {
   
     // Carga los valores de los atributos del elemento HTML.
     private loadAttributes() {
+      const resultadoMaquina = state.getState()
+      console.log(resultadoMaquina);
+      
+
       this.resultText = this.getAttribute('result-text') || this.resultText;
-      this.playerScore = this.getAttribute('player-score') || this.playerScore;
-      this.machineScore = this.getAttribute('machine-score') || this.machineScore;
+      this.playerScore = resultadoMaquina.userJugador,
+      this.machineScore = resultadoMaquina.userComputer,
       this.buttonText = this.getAttribute('button-text') || this.buttonText;
     }
   

@@ -7,13 +7,13 @@ export class gameCom extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-   }
+  }
 
   connectedCallback() {
     this.render();
-    this.temporizadorCom(5)
     this.gameLogic();
-   }
+    this.temporizadorCom(5)
+  }
 
   render() {
     if (!this.shadowRoot) return;
@@ -181,65 +181,75 @@ export class gameCom extends HTMLElement {
 
   gameLogic() {
     const piedraButton = this.shadowRoot?.querySelector(".btn-piedra");
-    if (!this.shadowRoot?.querySelector(".hands") ) return
-    const handsCom = this.shadowRoot?.querySelector(".hands") 
+    if (!this.shadowRoot?.querySelector(".hands")) return
+    const handsCom = this.shadowRoot?.querySelector(".hands")
     piedraButton?.addEventListener("click", () => {
-    handsCom!.innerHTML= '';      
-    handsCom!.innerHTML= `
+      handsCom!.innerHTML = '';
+      handsCom!.innerHTML = `
     <piedra-com class="hand-game agrandado" ></piedra-com>
-    ` 
-       const aleatorio = this.randomFun()
+    `
+      const aleatorio = this.randomFun()
+      console.log(aleatorio);
+      
       this.mostrarJugadaComputadora(aleatorio);
-       clearTimeout(this.timeoutId)
-       const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-       circle?.style.setProperty("display", "none");
-       state.setState("piedra",aleatorio)
-       goTo("/ganador")
+      clearTimeout(this.timeoutId)
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      circle?.style.setProperty("display", "none");
+      state.setState("piedra", aleatorio)
+      setTimeout(()=>{
+        goTo("/ganador")
+      },2000)
+    });
 
+
+    const papelButton = this.shadowRoot?.querySelector(".btn-papel");
+    if (!this.shadowRoot?.querySelector(".hands")) return
+    const hands2Com = this.shadowRoot?.querySelector(".hands")
+
+    papelButton?.addEventListener("click", () => {
+      console.log("muy bien aplastate un papel");
+      hands2Com!.innerHTML = '';
+      hands2Com!.innerHTML = `
+        <papel-com class="hand-game agrandado" ></papel-com>
+        `
+      const aleatorio = this.randomFun();
+      this.mostrarJugadaComputadora(aleatorio);
+      clearTimeout(this.timeoutId)
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      circle?.style.setProperty("display", "none");
+      state.setState("papel", aleatorio)
+      setTimeout(()=>{
+        goTo("/ganador")
+      },2000)
+
+    });
+
+    const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
+    if (!this.shadowRoot.querySelector(".hands")) return
+    const hands3 = this.shadowRoot.querySelector(".hands")
+
+    tijeraButton?.addEventListener("click", () => {
+      console.log("muy bien aplastate un tijera");
+      hands3!.innerHTML = ''
+      hands3!.innerHTML = `
+        <tijera-com class="hand-game agrandado" ></tijera-com>
+        `
+      const aleatorio = this.randomFun();
+      this.mostrarJugadaComputadora(aleatorio);
+      clearTimeout(this.timeoutId)
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      circle?.style.setProperty("display", "none");
+      state.setState("tijera", aleatorio)
+      setTimeout(()=>{
+        goTo("/ganador")
+      },2000)
 
     });
 
 
-      const papelButton = this.shadowRoot?.querySelector(".btn-papel");
-    if (!this.shadowRoot?.querySelector(".hands") ) return
-    const hands2Com = this.shadowRoot?.querySelector(".hands") 
-
-      papelButton?.addEventListener("click", () => {
-        console.log("muy bien aplastate un papel");
-        hands2Com!.innerHTML= '';      
-        hands2Com!.innerHTML= `
-        <papel-com class="hand-game agrandado" ></papel-com>
-        ` 
-        const aleatorio = this.randomFun();
-        this.mostrarJugadaComputadora(aleatorio);
-        clearTimeout(this.timeoutId)
-        const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-        circle?.style.setProperty("display", "none");
-
-      });
-
-      const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
-      if(!this.shadowRoot.querySelector(".hands")) return
-      const hands3 = this.shadowRoot.querySelector(".hands")
-
-      tijeraButton?.addEventListener("click", () => {
-        console.log("muy bien aplastate un tijera");
-        hands3!.innerHTML=''
-        hands3!.innerHTML = `
-        <tijera-com class="hand-game agrandado" ></tijera-com>
-        `
-        const aleatorio = this.randomFun();
-        this.mostrarJugadaComputadora(aleatorio);
-        clearTimeout(this.timeoutId)
-        const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-        circle?.style.setProperty("display", "none");
-
-      });
-
-
   }
 
-  randomFun():string {
+  randomFun(): string {
     const opciones = ["piedra", "papel", "tijera"];
     function palabraAlAzar(arr: string[]): string {
       const indice = Math.floor(Math.random() * arr.length);
@@ -249,56 +259,56 @@ export class gameCom extends HTMLElement {
     return jugadaComputadora
   }
 
-// Función para mostrar la jugada de la computadora
-mostrarJugadaComputadora(jugadaComputadora: string) {
-  const randomHandContainer = this.shadowRoot?.querySelector(".randomHand");
-  if (!randomHandContainer) return;
+  // Función para mostrar la jugada de la computadora
+  mostrarJugadaComputadora(jugadaComputadora: string) {
+    const randomHandContainer = this.shadowRoot?.querySelector(".randomHand");
+    if (!randomHandContainer) return;
 
-  // Limpiar contenido anterior
-  randomHandContainer.innerHTML = '';
+    // Limpiar contenido anterior
+    randomHandContainer.innerHTML = '';
 
-  // Crear HTML según la jugada
-  let htmlContent = '';
-  
-  if (jugadaComputadora === "piedra") {
-    htmlContent = `
+    // Crear HTML según la jugada
+    let htmlContent = '';
+
+    if (jugadaComputadora === "piedra") {
+      htmlContent = `
       <div class="piedra-container">
         <img src="/src/assets/piedra.png" alt="Piedra" class="piedra-image">
       </div>
     `;
-  } else if (jugadaComputadora === "papel") {
-    htmlContent = `
+    } else if (jugadaComputadora === "papel") {
+      htmlContent = `
       <div class="papel-container">
         <img src="/src/assets/papel.png" alt="Papel" class="papel-image">
       </div>
     `;
-  } else if (jugadaComputadora === "tijera") {
-    htmlContent = `
+    } else if (jugadaComputadora === "tijera") {
+      htmlContent = `
       <div class="tijera-container">
         <img src="/src/assets/tijera.png" alt="Tijera" class="tijera-image">
       </div>
     `;
+    }
+
+    // Aplicar el HTML al contenedor
+    randomHandContainer.innerHTML = htmlContent;
   }
 
-  // Aplicar el HTML al contenedor
-  randomHandContainer.innerHTML = htmlContent;
-}
 
- 
-temporizadorCom (segundos:number) {
-  clearTimeout(this.timeoutId)
- const contador = this.shadowRoot?.querySelector(".countdown")
- if (segundos >= 0 ) {
-   contador!.textContent = `${segundos}`
-    this.timeoutId = setTimeout(() => {
-     this.temporizadorCom(segundos-1)
-  }, 1000)
-  }
+  temporizadorCom(segundos: number) {
+    clearTimeout(this.timeoutId)
+    const contador = this.shadowRoot?.querySelector(".countdown")
+    if (segundos >= 0) {
+      contador!.textContent = `${segundos}`
+      this.timeoutId = setTimeout(() => {
+        this.temporizadorCom(segundos - 1)
+      }, 1000)
+    }
 
-  else {
-    const alerta = this.shadowRoot?.querySelector(".container");
-    if (alerta) {
-      alerta.innerHTML = `
+    else {
+      const alerta = this.shadowRoot?.querySelector(".container");
+      if (alerta) {
+        alerta.innerHTML = `
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
           <div style="background-color: white; padding: 40px; border-radius: 10px; text-align: center;">
             <h2 style="margin: 0 0 20px 0; color: #001997;">¡Se te acabó el tiempo!</h2>
@@ -306,17 +316,17 @@ temporizadorCom (segundos:number) {
           </div>
         </div>
       `;
-      
-      const btnJugar = this.shadowRoot?.querySelector("#reiniciarJuego");
-      btnJugar?.addEventListener("click", () => {
-        this.render()
-        this.gameLogic()
-        this.temporizadorCom(5);
-      });
+
+        const btnJugar = this.shadowRoot?.querySelector("#reiniciarJuego");
+        btnJugar?.addEventListener("click", () => {
+          this.render()
+          this.gameLogic()
+          this.temporizadorCom(5);
+        });
+      }
     }
   }
-}
- 
+
 }
 
 customElements.define("game-com", gameCom);

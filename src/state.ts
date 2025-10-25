@@ -11,8 +11,8 @@ listener: [] as Function[],
 
 
 partidasGanadas: {
-  userComputer: 0,
-  userJugador:0
+  userComputer: 0 as number,
+  userJugador:0 as number
 }
 ,
 
@@ -25,11 +25,11 @@ winGame(jugador:Opcion, computadora:string){
     (jugador === "papel" && computadora === "piedra") ||
     (jugador === "tijera" && computadora === "papel")
   ) {
-    return this.partidasGanadas.userJugador+1;
+    return  this.partidasGanadas.userJugador++
 
 
   } else {
-    return  this.partidasGanadas.userComputer+1;
+    return  this.partidasGanadas.userComputer++
   }
 },
 
