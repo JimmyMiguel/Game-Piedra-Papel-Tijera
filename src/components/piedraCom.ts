@@ -21,15 +21,18 @@ export class piedraCom extends HTMLElement {
           margin:0;
           padding:0;
         }
-            .img-container { /* Renombré la clase para más claridad */
-                width: 60px;
-                height: 115px;
-            }
+        .img-container {
+            width: 100px;
+            height: 250px;
+            bottom: -2;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+        }
 
             /* ESTA ES LA REGLA CLAVE QUE FALTA */
             .img-container img {
-                 height: 100%;
-                object-fit: contain; /* Evita que la imagen se deforme */
+                 object-fit: contain; /* Evita que la imagen se deforme */
             }
         </style>
         <div class="img-container">

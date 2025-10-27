@@ -8,7 +8,7 @@ const state = {
   
 listener: [] as Function[],
 
-
+resultado: "" as string,
 
 partidasGanadas: {
   userComputer: 0 as number,
@@ -16,7 +16,7 @@ partidasGanadas: {
 }
 ,
 
-winGame(jugador:Opcion, computadora:string){
+winGame(jugador:Opcion, computadora:string):string{
  
  if (jugador === computadora) return "Empate";
 
@@ -25,11 +25,13 @@ winGame(jugador:Opcion, computadora:string){
     (jugador === "papel" && computadora === "piedra") ||
     (jugador === "tijera" && computadora === "papel")
   ) {
-    return  this.partidasGanadas.userJugador++
+    this.partidasGanadas.userJugador++
+    return "Ganaste"  
 
 
   } else {
-    return  this.partidasGanadas.userComputer++
+    this.partidasGanadas.userComputer++
+    return  "Perdiste"
   }
 },
 
@@ -44,7 +46,8 @@ getState() {
 
   setState(accionJugador:Opcion, accionCompu:string) {
 
-    this.winGame(accionJugador, accionCompu)
+    const resultado = this.winGame(accionJugador, accionCompu)
+    this.resultado =resultado
     for (const callback of this.listener) {
       callback();
     }

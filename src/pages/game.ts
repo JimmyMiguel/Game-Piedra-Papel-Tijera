@@ -1,5 +1,6 @@
 import { goTo } from "../router";
 import { state } from "../state";
+import "../pages/ganador"
 
 export class gameCom extends HTMLElement {
   timeoutId: number | undefined
@@ -12,7 +13,7 @@ export class gameCom extends HTMLElement {
   connectedCallback() {
     this.render();
     this.gameLogic();
-    this.temporizadorCom(5)
+    this.temporizadorCom(500)
   }
 
   render() {
@@ -35,6 +36,7 @@ export class gameCom extends HTMLElement {
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+            padding: 20px 0;
         }
 
         .title {
@@ -58,6 +60,12 @@ export class gameCom extends HTMLElement {
              user-select: none;
             position: relative;
             overflow: visible;
+            margin: 20px 0;
+            }
+
+        .circle.hidden {
+            display: none;
+            margin: 0;
             }
 
         .circle::before {
@@ -107,18 +115,18 @@ export class gameCom extends HTMLElement {
 
         }
         .piedra-container, .papel-container, .tijera-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 20px;
-                background-color: rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                margin: 10px 0;
-              }
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: stretch;
+            height: 280px;
+ 
+        }
 
         .piedra-image, .papel-image, .tijera-image {
-                width: 150px;
-                height: 150px;
+        
+                width: 170px;
+                height: 100px;
                 display: block;
                 margin: 0 auto;
                 object-fit: contain;
@@ -139,8 +147,10 @@ export class gameCom extends HTMLElement {
                }
 
                 .hand-game.agrandado {
-                transform: scale(1.5);
+                transform: scale(1.2);
                 transition: transform 0.2s ease;
+                max-width: 200px;
+                max-height: 200px;
               }
 
         .piedra-image:hover, .papel-image:hover, .tijera-image:hover {
@@ -150,11 +160,76 @@ export class gameCom extends HTMLElement {
         .hands {
           display: flex;
           justify-content: center;
+          align-items: center;
           gap: 24px;
           margin-top: 40px;
           width: 100%;
-          height: 250px;        /* ✅ Aumentar el height */
-          overflow: visible;    /* ✅ Cambiar de hidden a visible */
+          min-height: 250px;
+          max-height: 300px;
+          overflow: visible;
+          flex-wrap: wrap;
+        }
+
+          .hands.clicked {
+               min-height: 430px;
+              max-height: 430px;
+          }
+
+        piedra-com, papel-com, tijera-com {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          margin: 10px 0;
+        }
+
+        piedra-com img, papel-com img, tijera-com img {
+          width: 150px;
+          height: 150px;
+          display: block;
+          margin: 0 auto;
+          object-fit: contain;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
+        }
+
+        piedra-com:hover img, papel-com:hover img, tijera-com:hover img {
+          transform: scale(1.1);
+        }
+
+        .randomHand {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 200px;
+          margin: 20px 0;
+        }
+
+        .randomHand piedra-com, 
+        .randomHand papel-com, 
+        .randomHand tijera-com {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          margin: 10px 0;
+        }
+
+        .randomHand piedra-com img, 
+        .randomHand papel-com img, 
+        .randomHand tijera-com img {
+          width: 150px;
+          height: 150px;
+          display: block;
+          margin: 0 auto;
+          object-fit: contain;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
         }
 
       </style>
@@ -180,25 +255,31 @@ export class gameCom extends HTMLElement {
   }
 
   gameLogic() {
+    //agrego el componente de piedra
     const piedraButton = this.shadowRoot?.querySelector(".btn-piedra");
+
     if (!this.shadowRoot?.querySelector(".hands")) return
+
+
     const handsCom = this.shadowRoot?.querySelector(".hands")
+
     piedraButton?.addEventListener("click", () => {
+      handsCom!.classList.add("clicked");
       handsCom!.innerHTML = '';
       handsCom!.innerHTML = `
     <piedra-com class="hand-game agrandado" ></piedra-com>
     `
       const aleatorio = this.randomFun()
       console.log(aleatorio);
-      
+
       this.mostrarJugadaComputadora(aleatorio);
       clearTimeout(this.timeoutId)
       const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-      circle?.style.setProperty("display", "none");
+      circle?.classList.add("hidden");
       state.setState("piedra", aleatorio)
-      setTimeout(()=>{
+      setTimeout(() => {
         goTo("/ganador")
-      },2000)
+      }, 100000)
     });
 
 
@@ -208,6 +289,7 @@ export class gameCom extends HTMLElement {
 
     papelButton?.addEventListener("click", () => {
       console.log("muy bien aplastate un papel");
+      hands2Com!.classList.add("clicked");
       hands2Com!.innerHTML = '';
       hands2Com!.innerHTML = `
         <papel-com class="hand-game agrandado" ></papel-com>
@@ -216,11 +298,11 @@ export class gameCom extends HTMLElement {
       this.mostrarJugadaComputadora(aleatorio);
       clearTimeout(this.timeoutId)
       const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-      circle?.style.setProperty("display", "none");
+      circle?.classList.add("hidden");
       state.setState("papel", aleatorio)
-      setTimeout(()=>{
+      setTimeout(() => {
         goTo("/ganador")
-      },2000)
+      }, 2000)
 
     });
 
@@ -230,6 +312,7 @@ export class gameCom extends HTMLElement {
 
     tijeraButton?.addEventListener("click", () => {
       console.log("muy bien aplastate un tijera");
+      hands3!.classList.add("clicked");
       hands3!.innerHTML = ''
       hands3!.innerHTML = `
         <tijera-com class="hand-game agrandado" ></tijera-com>
@@ -238,11 +321,11 @@ export class gameCom extends HTMLElement {
       this.mostrarJugadaComputadora(aleatorio);
       clearTimeout(this.timeoutId)
       const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
-      circle?.style.setProperty("display", "none");
+      circle?.classList.add("hidden");
       state.setState("tijera", aleatorio)
-      setTimeout(()=>{
+      setTimeout(() => {
         goTo("/ganador")
-      },2000)
+      }, 2000)
 
     });
 
@@ -267,27 +350,15 @@ export class gameCom extends HTMLElement {
     // Limpiar contenido anterior
     randomHandContainer.innerHTML = '';
 
-    // Crear HTML según la jugada
+    // Crear HTML según la jugada usando los componentes
     let htmlContent = '';
 
     if (jugadaComputadora === "piedra") {
-      htmlContent = `
-      <div class="piedra-container">
-        <img src="/src/assets/piedra.png" alt="Piedra" class="piedra-image">
-      </div>
-    `;
+      htmlContent = `<piedra-com></piedra-com>`;
     } else if (jugadaComputadora === "papel") {
-      htmlContent = `
-      <div class="papel-container">
-        <img src="/src/assets/papel.png" alt="Papel" class="papel-image">
-      </div>
-    `;
+      htmlContent = `<papel-com></papel-com>`;
     } else if (jugadaComputadora === "tijera") {
-      htmlContent = `
-      <div class="tijera-container">
-        <img src="/src/assets/tijera.png" alt="Tijera" class="tijera-image">
-      </div>
-    `;
+      htmlContent = `<tijera-com></tijera-com>`;
     }
 
     // Aplicar el HTML al contenedor

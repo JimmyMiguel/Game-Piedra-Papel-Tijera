@@ -1,47 +1,52 @@
 import { goTo } from "../router";
 import { state } from "../state";
+import "../pages/game";
 class GameOverScreen extends HTMLElement {
-    // Propiedades que se pueden configurar a través de atributos HTML
-    private resultText: string = 'PERDISTE';
-    private playerScore: number = 0;
-    private machineScore: number = 0;
-    private buttonText: string = 'Volver a Jugar';
-  
-    constructor() {
-      super();
-       this.attachShadow({ mode: 'open' });
-    }
-  
-    // Se ejecuta cuando el elemento se conecta al DOM principal.
-    connectedCallback() {
-      this.loadAttributes();
-      this.render();
-      this.attachEventListeners();
-    }
-  
-    // Carga los valores de los atributos del elemento HTML.
-    private loadAttributes() {
-      const resultadoMaquina = state.getState()
-      console.log(resultadoMaquina);
-      
+  // Propiedades que se pueden configurar a través de atributos HTML
+  private resultText: string = "";
+  private playerScore: number = 0;
+  private machineScore: number = 0;
+  private buttonText: string = "Volver a Jugar";
 
-      this.resultText = this.getAttribute('result-text') || this.resultText;
-      this.playerScore = resultadoMaquina.userJugador,
-      this.machineScore = resultadoMaquina.userComputer,
-      this.buttonText = this.getAttribute('button-text') || this.buttonText;
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  // Se ejecuta cuando el elemento se conecta al DOM principal.
+  connectedCallback() {
+    this.loadAttributes();
+    this.render();
+    this.attachEventListeners();
+  }
+
+  // Carga los valores de los atributos del elemento HTML.
+  private loadAttributes() {
+    const resultado = state.getState();
+    const resultadoActual = state.resultado;
+    //evaluamos el resultado y creamos una clase para que se ejecute cuando
+    //cumpla la condicion
+    if (resultadoActual === "Ganaste") {
+      this.setAttribute("result", "win");
     }
-  
-    // Renderiza el HTML y el CSS del componente.
-    private render() {
-      if (!this.shadowRoot) return;
-  
-      this.shadowRoot.innerHTML = `
+
+    this.resultText = resultadoActual || this.resultText;
+    (this.playerScore = resultado.userJugador),
+      (this.machineScore = resultado.userComputer),
+      (this.buttonText = this.getAttribute("button-text") || this.buttonText);
+  }
+
+  // Renderiza el HTML y el CSS del componente.
+  private render() {
+    if (!this.shadowRoot) return;
+
+    this.shadowRoot.innerHTML = `
         <style>
           /* --- Fuentes y Variables --- */
           @import url('https://fonts.googleapis.com/css2?family=Anton&family=Press+Start+2P&display=swap');
           
           :host {
-            --star-color: #d9534f;
+            --star-color: rgba(220, 91, 73, 1);
             --box-bg-color: #ffffff;
             --button-bg-color: #0275d8;
             --button-border-color: #025aa5;
@@ -97,8 +102,11 @@ class GameOverScreen extends HTMLElement {
             z-index:100;
             font-family: 'Press Start 2P', cursive;
             font-size: 2rem;
+            }
 
-            
+            :host([result="win"]) {
+             --star-color:rgba(108, 180, 108, 1); /* Verde claro */
+            --bg-color: rgba(136, 137, 73, 0.9); /* Verde oliva */
             }
   
           /* --- Elemento: Cuadro de Puntuación --- */
@@ -165,16 +173,16 @@ class GameOverScreen extends HTMLElement {
           </button>
         </div>
       `;
-    }
-    
-    // Añade un listener al botón para emitir un evento personalizado.
-    private attachEventListeners() {
-      const button = this.shadowRoot?.getElementById('playAgainButton');
-      button?.addEventListener('click', () => {
-        goTo("/gameCom")
-        });
-    }
   }
-  
-  // Define el custom element para que el navegador lo reconozca.
-  customElements.define('game-over-screen', GameOverScreen);
+
+  // Añade un listener al botón para emitir un evento personalizado.
+  private attachEventListeners() {
+    const button = this.shadowRoot?.getElementById("playAgainButton");
+    button?.addEventListener("click", () => {
+      goTo("/gameCom");
+    });
+  }
+}
+
+// Define el custom element para que el navegador lo reconozca.
+customElements.define("game-over-screen", GameOverScreen);

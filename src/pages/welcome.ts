@@ -32,7 +32,7 @@ export class welcomePage extends HTMLElement {
           height: 100vh;
           font-family: "Odibee Sans", sans-serif;
           letter-spacing: 2px;
-          background-image: url('/src/assets/fondo-azul.jpg');
+            background-image: url('/src/assets/fondo-azul.jpg');
           background-repeat: round;
           display: flex;
           flex-direction: column;
@@ -59,10 +59,34 @@ export class welcomePage extends HTMLElement {
           justify-content: center;
           gap: 24px;
           margin-top: 40px;
-          width:100%;
-          height: 115px;
-          overflow: hidden;
-         }
+          width: 100%;
+          height: 250px;
+          overflow: visible;
+        }
+
+        piedra-com, papel-com, tijera-com {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 20px;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
+          margin: 10px 0;
+        }
+
+        piedra-com img, papel-com img, tijera-com img {
+          width: 150px;
+          height: 150px;
+          display: block;
+          margin: 0 auto;
+          object-fit: contain;
+          border-radius: 8px;
+          transition: transform 0.3s ease;
+        }
+
+        piedra-com:hover img, papel-com:hover img, tijera-com:hover img {
+          transform: scale(1.1);
+        }
 
       </style>
 
