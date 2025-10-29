@@ -13,7 +13,7 @@ export class gameCom extends HTMLElement {
   connectedCallback() {
     this.render();
     this.gameLogic();
-    this.temporizadorCom(500)
+    this.temporizadorCom(5)
   }
 
   render() {
@@ -36,8 +36,7 @@ export class gameCom extends HTMLElement {
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 0;
-        }
+         }
 
         .title {
           width: 100%;
@@ -78,14 +77,14 @@ export class gameCom extends HTMLElement {
             border: 20px solid transparent;
             border-top-color: black;
             border-right-color: black;
-            border-bottom-color: black; /* Tres bordes visibles (3/4) */
-            border-left-color: transparent; /* El cuarto invisible */
+            border-bottom-color: black; 
+            border-left-color: transparent; 
             animation: spin 2s linear infinite;
             box-sizing: border-box;
             pointer-events: none;
             }
 
-            /* Para que el contenido NO rote ni se vea afectado */
+ 
         .circle > .countdown {
             position: relative;
             z-index: 1;
@@ -97,149 +96,43 @@ export class gameCom extends HTMLElement {
             to { transform: rotate(360deg); }
             }
 
-
-        #startBtn {
-            font-size: 30px;
-            padding: 12px 24px;
-            background-color: #005CFF;
-            font-family: "Odibee Sans", sans-serif;
-            letter-spacing: 4px;
-            color: white;
-            border: 4px solid #001997;
-            border-radius: 8px;
-            cursor: pointer;
-        }
         .btn-tijera, .btn-papel, .btn-piedra{
                 border: none;
                 all: unset
-
         }
-        .piedra-container, .papel-container, .tijera-container {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: stretch;
-            height: 280px;
- 
-        }
-
-        .piedra-image, .papel-image, .tijera-image {
-        
-                width: 170px;
-                height: 100px;
-                display: block;
-                margin: 0 auto;
-                object-fit: contain;
-                border-radius: 8px;
-                transition: transform 0.3s ease;
-                transform:rotate(180deg);
-              }
-                        .hand-game{
-                width: 150px;
-                height: 150px;
-                display: block;
-                margin: 0 auto;
-                object-fit: contain;
-                border-radius: 8px;
-                transition: transform 0.3s ease;
-                transform: scale(1.1);
-
-               }
-
-                .hand-game.agrandado {
-                transform: scale(1.2);
-                transition: transform 0.2s ease;
-                max-width: 200px;
-                max-height: 200px;
-              }
-
-        .piedra-image:hover, .papel-image:hover, .tijera-image:hover {
-                transform: scale(1.1);
-              }
 
         .hands {
           display: flex;
           justify-content: center;
           align-items: center;
+          flex-direction:row;
           gap: 24px;
-          margin-top: 40px;
           width: 100%;
-          min-height: 250px;
-          max-height: 300px;
-          overflow: visible;
+          height: 250px;
+           overflow: visible;
           flex-wrap: wrap;
         }
+          .clicked{
+          margin-bottom:100px;
+          height: 215px;
 
-          .hands.clicked {
-               min-height: 430px;
-              max-height: 430px;
+          
           }
-
-        piedra-com, papel-com, tijera-com {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-          background-color: rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          margin: 10px 0;
-        }
-
-        piedra-com img, papel-com img, tijera-com img {
-          width: 150px;
-          height: 150px;
-          display: block;
-          margin: 0 auto;
-          object-fit: contain;
-          border-radius: 8px;
-          transition: transform 0.3s ease;
-        }
-
-        piedra-com:hover img, papel-com:hover img, tijera-com:hover img {
-          transform: scale(1.1);
-        }
 
         .randomHand {
           display: flex;
           justify-content: center;
           align-items: center;
-          width: 100%;
-          height: 200px;
-          margin: 20px 0;
-        }
-
-        .randomHand piedra-com, 
-        .randomHand papel-com, 
-        .randomHand tijera-com {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 20px;
-          background-color: rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          margin: 10px 0;
-        }
-
-        .randomHand piedra-com img, 
-        .randomHand papel-com img, 
-        .randomHand tijera-com img {
-          width: 150px;
-          height: 150px;
-          display: block;
-          margin: 0 auto;
-          object-fit: contain;
-          border-radius: 8px;
-          transition: transform 0.3s ease;
+          transform: rotate(180deg);
+          margin-top:100px
         }
 
       </style>
 
     <div class="container">
 
-
         <div class="randomHand">
         </div>
-
 
         <div class="circle">
             <span class="countdown"></span>
@@ -267,7 +160,7 @@ export class gameCom extends HTMLElement {
       handsCom!.classList.add("clicked");
       handsCom!.innerHTML = '';
       handsCom!.innerHTML = `
-    <piedra-com class="hand-game agrandado" ></piedra-com>
+    <piedra-com></piedra-com>
     `
       const aleatorio = this.randomFun()
       console.log(aleatorio);
@@ -279,7 +172,7 @@ export class gameCom extends HTMLElement {
       state.setState("piedra", aleatorio)
       setTimeout(() => {
         goTo("/ganador")
-      }, 100000)
+      }, 2000)
     });
 
 
@@ -292,7 +185,7 @@ export class gameCom extends HTMLElement {
       hands2Com!.classList.add("clicked");
       hands2Com!.innerHTML = '';
       hands2Com!.innerHTML = `
-        <papel-com class="hand-game agrandado" ></papel-com>
+        <papel-com></papel-com>
         `
       const aleatorio = this.randomFun();
       this.mostrarJugadaComputadora(aleatorio);
@@ -315,7 +208,7 @@ export class gameCom extends HTMLElement {
       hands3!.classList.add("clicked");
       hands3!.innerHTML = ''
       hands3!.innerHTML = `
-        <tijera-com class="hand-game agrandado" ></tijera-com>
+        <tijera-com></tijera-com>
         `
       const aleatorio = this.randomFun();
       this.mostrarJugadaComputadora(aleatorio);

@@ -46,42 +46,20 @@ export class readyCom extends HTMLElement {
         .hands {
           display: flex;
           justify-content: center;
-          gap: 24px;
-          margin-top: 40px;
-          width: 100%;
-          height: 250px;
-          overflow: visible;
-        }
-
-        piedra-com, papel-com, tijera-com {
-          display: flex;
-          justify-content: center;
           align-items: center;
-          padding: 20px;
-          background-color: rgba(255, 255, 255, 0.1);
-          border-radius: 12px;
-          margin: 10px 0;
+          gap: 24px;
+           width: 100%;
+          min-height: 250px;
+          max-height: 300px;
+          overflow: visible;
+          flex-wrap: wrap;
         }
 
-        piedra-com img, papel-com img, tijera-com img {
-          width: 150px;
-          height: 150px;
-          display: block;
-          margin: 0 auto;
-          object-fit: contain;
-          border-radius: 8px;
-          transition: transform 0.3s ease;
-        }
-
-        piedra-com:hover img, papel-com:hover img, tijera-com:hover img {
-          transform: scale(1.1);
-        }
- 
       </style>
 
       <div class="container">
         <div class="title">
-        Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 3 segundos.
+        Presioná jugar y elegí: piedra, papel o tijera antes de que pasen los 5 segundos.
         </div>
 
         <btn-com id="startBtn">¡A JUGAR!</btn-com>

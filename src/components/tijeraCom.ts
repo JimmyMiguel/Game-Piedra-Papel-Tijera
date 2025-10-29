@@ -30,9 +30,8 @@ export class tijeraCom extends HTMLElement {
             justify-content: end;
         }
 
-            /* ESTA ES LA REGLA CLAVE QUE FALTA */
-            .img-container img {
-                 object-fit: contain; /* Evita que la imagen se deforme */
+             .img-container img {
+                 object-fit: contain; 
             }
         </style>
         <div class="img-container">

@@ -32,7 +32,7 @@ export class piedraCom extends HTMLElement {
 
             /* ESTA ES LA REGLA CLAVE QUE FALTA */
             .img-container img {
-                 object-fit: contain; /* Evita que la imagen se deforme */
+                 object-fit: contain; 
             }
         </style>
         <div class="img-container">

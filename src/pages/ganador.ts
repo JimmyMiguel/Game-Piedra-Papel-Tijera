@@ -42,9 +42,6 @@ class GameOverScreen extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
         <style>
-          /* --- Fuentes y Variables --- */
-          @import url('https://fonts.googleapis.com/css2?family=Anton&family=Press+Start+2P&display=swap');
-          
           :host {
             --star-color: rgba(220, 91, 73, 1);
             --box-bg-color: #ffffff;
@@ -57,8 +54,7 @@ class GameOverScreen extends HTMLElement {
             height: 100%;
           }
   
-          /* --- Estructura Principal (Mobile-First) --- */
-          .container {
+           .container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -66,8 +62,6 @@ class GameOverScreen extends HTMLElement {
             gap: 2rem; /* Espacio entre elementos */
             padding: 1.5rem;
             background-color: var(--bg-color);
-            /* Opcional: Patrón de fondo como en la imagen */
-            /* background-image: url('path/to/your/hand-pattern.svg'); */
             height: 100%;
             box-sizing: border-box;
             text-align: center;
