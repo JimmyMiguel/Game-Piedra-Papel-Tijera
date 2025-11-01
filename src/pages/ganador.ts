@@ -54,76 +54,54 @@ class GameOverScreen extends HTMLElement {
             height: 100%;
           }
   
-           .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem; /* Espacio entre elementos */
-            padding: 1.5rem;
-            background-color: var(--bg-color);
-            height: 100%;
-            box-sizing: border-box;
-            text-align: center;
+          .container {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: space-around;
+              gap: 2rem;
+              background-repeat: round;
+              background-image: url('/src/assets/win.jpg');
+              padding: 0rem;
+              height: 100%;
           }
-  
-          /* --- Elemento: Estrella --- */
-          .star-container {
-            position: relative;
-            width: 30rem;
-            height: 30rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text-light-color);
-            font-size: 3rem;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-          }
-  
-          .star-container::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: var(--star-color);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            border: 4px solid var(--text-dark-color);
-            box-sizing: border-box;
-          }
-
             .resultado{
             margin-bottom:60px;
             z-index:100;
-            font-family: 'Press Start 2P', cursive;
             font-size: 2rem;
             }
+
+            .star-container {
+                width: 65%;
+                height: 100px;
+                background-color: antiquewhite;
+                margin-top: 34px;
+            }
+ 
 
             :host([result="win"]) {
              --star-color:rgba(108, 180, 108, 1); /* Verde claro */
             --bg-color: rgba(136, 137, 73, 0.9); /* Verde oliva */
             }
   
-          /* --- Elemento: Cuadro de Puntuación --- */
-          .score-box {
-            background-color: var(--box-bg-color);
-            border: 5px solid var(--text-dark-color);
-            border-radius: 15px;
-            padding: 1.5rem 2.5rem;
-            width: 80%;
-            max-width: 350px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            color: var(--text-dark-color);
-            font-family: 'Press Start 2P', cursive;
-          }
+            .score-box {
+                background-color: var(--box-bg-color);
+                border: 5px solid var(--text-dark-color);
+                border-radius: 15px;
+                padding: 1rem 1.5rem;
+                width: 18%;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                color: var(--text-dark-color);
+            }
   
           .score-box h2 {
-            margin: 0 0 1rem 0;
+            margin: 0;
             font-size: 2rem;
           }
   
           .score-box p {
-            margin: 0.5rem 0;
-            font-size: 1.25rem;
+            margin: 0;
+            font-size: 1rem;
           }
   
           /* --- Elemento: Botón --- */
