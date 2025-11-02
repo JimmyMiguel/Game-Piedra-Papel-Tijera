@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     outDir: 'dist', // carpeta de salida
     rollupOptions: {
-      input: 'src/main.js', // archivo principal de tu proyecto, ajustalo si usás otro
+      input: 'src/main.ts', // archivo principal de tu proyecto, ajustalo si usás otro
     },
   },
 })
