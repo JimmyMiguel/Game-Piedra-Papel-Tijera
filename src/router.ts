@@ -1,5 +1,5 @@
-import   "./pages/ready";
-import  "./pages/welcome";
+import "./pages/ready";
+import "./pages/welcome";
 import "./pages/game"
 import "./pages/ganador"
 // --- Tipos y Rutas (a nivel de módulo) ---
@@ -13,10 +13,10 @@ const routes: Route[] = [
   {
     path: /^\/$/,
     action: () => {
-          const readycom = document.createElement("welcome-page")
-          return readycom
+      const readycom = document.createElement("welcome-page")
+      return readycom
 
-        
+
     },
   },
   {
@@ -26,7 +26,7 @@ const routes: Route[] = [
       return readycom;
     },
   },
-   {
+  {
     path: /^\/gameCom$/,
     action: () => {
       const readycom = document.createElement("game-com");
@@ -40,7 +40,7 @@ const routes: Route[] = [
       return ganadorCom;
     },
   },
- 
+
 ];
 
 let container: Element | null = null;
@@ -77,5 +77,5 @@ export function initRouter(mainContainer: Element) {
     handleRoute(location.pathname);
   });
 
-   handleRoute(location.pathname);
+  handleRoute(location.pathname);
 }
