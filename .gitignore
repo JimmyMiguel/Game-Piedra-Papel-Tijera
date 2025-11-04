@@ -1,8 +1,8 @@
 # Ignorar la carpeta de dependencias
-node_modules/
+node_modules
 
 # Ignorar la carpeta de build
-dist/
+dist
 
 # Ignorar cachés de node_modules
 node_modules/.cache/
