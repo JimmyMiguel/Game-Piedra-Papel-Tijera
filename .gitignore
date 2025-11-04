@@ -1,21 +1,4 @@
-# Ignorar la carpeta de dependencias
 node_modules
-
-# Ignorar la carpeta de build
 dist
-
-# Ignorar cachés de node_modules
-node_modules/.cache/
-
-# Ignorar archivos de logs
-npm-debug.log*
-pnpm-debug.log*
-
-# Ignorar archivos de configuración de entorno
 .env
-.env.local
-.env.*.local
-
-# Ignorar archivos del sistema
-.DS_Store
-Thumbs.db
+*.log
