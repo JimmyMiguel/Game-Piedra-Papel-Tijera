@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Redireccionando...</title>
+    <script>
+        const path = window.location.pathname;
+        const basePath = '/Game-Piedra-Papel-Tijera';
+        localStorage.setItem('path', path.replace(basePath, ''));
+        window.location.href = basePath;
+    </script>
+</head>
+<body>
+    Redireccionando...
+</body>
+</html>
