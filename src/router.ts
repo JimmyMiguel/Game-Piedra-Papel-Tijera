@@ -1,7 +1,7 @@
 import "./pages/ready";
 import "./pages/welcome";
-import "./pages/game"
-import "./pages/ganador"
+import "./pages/game";
+import "./pages/ganador";
 // --- Tipos y Rutas (a nivel de módulo) ---
 type Route = {
   path: RegExp;
@@ -9,38 +9,37 @@ type Route = {
 };
 
 //todas las rutas
+const BASE_PATH = "/Game-Piedra-Papel-Tijera";
+
 const routes: Route[] = [
   {
-    path: /^\/$/,
+    path: new RegExp(`^${BASE_PATH}/?$`),
     action: () => {
-      const readycom = document.createElement("welcome-page")
-      return readycom
-
-
+      const readycom = document.createElement("welcome-page");
+      return readycom;
     },
   },
   {
-    path: /^\/readycom$/,
+    path: new RegExp(`^${BASE_PATH}/readycom/?$`),
     action: () => {
       const readycom = document.createElement("ready-com");
       return readycom;
     },
   },
   {
-    path: /^\/gameCom$/,
+    path: new RegExp(`^${BASE_PATH}/gameCom/?$`),
     action: () => {
       const readycom = document.createElement("game-com");
       return readycom;
     },
   },
   {
-    path: /^\/ganador$/,
+    path: new RegExp(`^${BASE_PATH}/ganador/?$`),
     action: () => {
       const ganadorCom = document.createElement("game-over-screen");
       return ganadorCom;
     },
   },
-
 ];
 
 let container: Element | null = null;
@@ -67,7 +66,6 @@ export function goTo(path: string) {
   history.pushState({}, "", path);
   handleRoute(path);
 }
-
 
 //funtion para iniciar ruta
 export function initRouter(mainContainer: Element) {
