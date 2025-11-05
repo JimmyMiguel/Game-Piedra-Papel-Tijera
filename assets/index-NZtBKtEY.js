@@ -417,7 +417,7 @@ var E=Object.defineProperty;var T=(e,t,o)=>t in e?E(e,t,{enumerable:!0,configura
           height: 100vh;
           font-family: "Odibee Sans", sans-serif;
           letter-spacing: 2px;
-          background-image: url('/src/assets/fondo-azul.jpg');
+          background-image: url('/assets/fondo-azul.jpg');
           background-repeat: round;
           display: flex;
           flex-direction: column;
