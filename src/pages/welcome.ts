@@ -1,10 +1,10 @@
 import "../router";
 import { goTo } from "../router";
-import "../components/botonCom"
-import "../components/tijeraCom"
-import "../components/papelCom"
-import "../components/piedraCom"
-
+import "../components/botonCom";
+import "../components/tijeraCom";
+import "../components/papelCom";
+import "../components/piedraCom";
+import fondoAzul from "../assets/fondo-azul.jpg";
 
 export class welcomePage extends HTMLElement {
   constructor() {
@@ -32,7 +32,7 @@ export class welcomePage extends HTMLElement {
           height: 100vh;
           font-family: "Odibee Sans", sans-serif;
           letter-spacing: 2px;
-          background-image: url('/src/assets/fondo-azul.jpg');
+          background-image: url(${fondoAzul});
           background-repeat: round;
           display: flex;
           flex-direction: column;
