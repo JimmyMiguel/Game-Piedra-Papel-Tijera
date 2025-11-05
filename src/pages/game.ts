@@ -1,9 +1,10 @@
 import { goTo } from "../router";
 import { state } from "../state";
-import "../pages/ganador"
+import fondoAzul from "../assets/fondo-azul.jpg";
+import "../pages/ganador";
 
 export class gameCom extends HTMLElement {
-  timeoutId: number | undefined
+  timeoutId: number | undefined;
 
   constructor() {
     super();
@@ -13,7 +14,7 @@ export class gameCom extends HTMLElement {
   connectedCallback() {
     this.render();
     this.gameLogic();
-    this.temporizadorCom(5)
+    this.temporizadorCom(5);
   }
 
   render() {
@@ -30,7 +31,7 @@ export class gameCom extends HTMLElement {
             height: 100vh;
              font-family: "Odibee Sans", sans-serif;
             letter-spacing: 4px;
-            background-image: url('/src/assets/fondo-azul.jpg');
+            background-image: url(${fondoAzul});
             background-repeat: round;
             display: flex;
             flex-direction: column;
@@ -151,78 +152,72 @@ export class gameCom extends HTMLElement {
     //agrego el componente de piedra
     const piedraButton = this.shadowRoot?.querySelector(".btn-piedra");
 
-    if (!this.shadowRoot?.querySelector(".hands")) return
+    if (!this.shadowRoot?.querySelector(".hands")) return;
 
-
-    const handsCom = this.shadowRoot?.querySelector(".hands")
+    const handsCom = this.shadowRoot?.querySelector(".hands");
 
     piedraButton?.addEventListener("click", () => {
       handsCom!.classList.add("clicked");
-      handsCom!.innerHTML = '';
+      handsCom!.innerHTML = "";
       handsCom!.innerHTML = `
     <piedra-com></piedra-com>
-    `
-      const aleatorio = this.randomFun()
+    `;
+      const aleatorio = this.randomFun();
       console.log(aleatorio);
 
       this.mostrarJugadaComputadora(aleatorio);
-      clearTimeout(this.timeoutId)
-      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      clearTimeout(this.timeoutId);
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement;
       circle?.classList.add("hidden");
-      state.setState("piedra", aleatorio)
+      state.setState("piedra", aleatorio);
       setTimeout(() => {
-        goTo("/ganador")
-      }, 2000)
+        goTo("/ganador");
+      }, 2000);
     });
 
-
     const papelButton = this.shadowRoot?.querySelector(".btn-papel");
-    if (!this.shadowRoot?.querySelector(".hands")) return
-    const hands2Com = this.shadowRoot?.querySelector(".hands")
+    if (!this.shadowRoot?.querySelector(".hands")) return;
+    const hands2Com = this.shadowRoot?.querySelector(".hands");
 
     papelButton?.addEventListener("click", () => {
       console.log("muy bien aplastate un papel");
       hands2Com!.classList.add("clicked");
-      hands2Com!.innerHTML = '';
+      hands2Com!.innerHTML = "";
       hands2Com!.innerHTML = `
         <papel-com></papel-com>
-        `
+        `;
       const aleatorio = this.randomFun();
       this.mostrarJugadaComputadora(aleatorio);
-      clearTimeout(this.timeoutId)
-      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      clearTimeout(this.timeoutId);
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement;
       circle?.classList.add("hidden");
-      state.setState("papel", aleatorio)
+      state.setState("papel", aleatorio);
       setTimeout(() => {
-        goTo("/ganador")
-      }, 2000)
-
+        goTo("/ganador");
+      }, 2000);
     });
 
     const tijeraButton = this.shadowRoot?.querySelector(".btn-tijera");
-    if (!this.shadowRoot.querySelector(".hands")) return
-    const hands3 = this.shadowRoot.querySelector(".hands")
+    if (!this.shadowRoot.querySelector(".hands")) return;
+    const hands3 = this.shadowRoot.querySelector(".hands");
 
     tijeraButton?.addEventListener("click", () => {
       console.log("muy bien aplastate un tijera");
       hands3!.classList.add("clicked");
-      hands3!.innerHTML = ''
+      hands3!.innerHTML = "";
       hands3!.innerHTML = `
         <tijera-com></tijera-com>
-        `
+        `;
       const aleatorio = this.randomFun();
       this.mostrarJugadaComputadora(aleatorio);
-      clearTimeout(this.timeoutId)
-      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement
+      clearTimeout(this.timeoutId);
+      const circle = this.shadowRoot?.querySelector(".circle") as HTMLElement;
       circle?.classList.add("hidden");
-      state.setState("tijera", aleatorio)
+      state.setState("tijera", aleatorio);
       setTimeout(() => {
-        goTo("/ganador")
-      }, 2000)
-
+        goTo("/ganador");
+      }, 2000);
     });
-
-
   }
 
   randomFun(): string {
@@ -232,7 +227,7 @@ export class gameCom extends HTMLElement {
       return arr[indice];
     }
     const jugadaComputadora = palabraAlAzar(opciones);
-    return jugadaComputadora
+    return jugadaComputadora;
   }
 
   // Función para mostrar la jugada de la computadora
@@ -241,10 +236,10 @@ export class gameCom extends HTMLElement {
     if (!randomHandContainer) return;
 
     // Limpiar contenido anterior
-    randomHandContainer.innerHTML = '';
+    randomHandContainer.innerHTML = "";
 
     // Crear HTML según la jugada usando los componentes
-    let htmlContent = '';
+    let htmlContent = "";
 
     if (jugadaComputadora === "piedra") {
       htmlContent = `<piedra-com></piedra-com>`;
@@ -258,18 +253,15 @@ export class gameCom extends HTMLElement {
     randomHandContainer.innerHTML = htmlContent;
   }
 
-
   temporizadorCom(segundos: number) {
-    clearTimeout(this.timeoutId)
-    const contador = this.shadowRoot?.querySelector(".countdown")
+    clearTimeout(this.timeoutId);
+    const contador = this.shadowRoot?.querySelector(".countdown");
     if (segundos >= 0) {
-      contador!.textContent = `${segundos}`
+      contador!.textContent = `${segundos}`;
       this.timeoutId = setTimeout(() => {
-        this.temporizadorCom(segundos - 1)
-      }, 1000)
-    }
-
-    else {
+        this.temporizadorCom(segundos - 1);
+      }, 1000);
+    } else {
       const alerta = this.shadowRoot?.querySelector(".container");
       if (alerta) {
         alerta.innerHTML = `
@@ -283,14 +275,13 @@ export class gameCom extends HTMLElement {
 
         const btnJugar = this.shadowRoot?.querySelector("#reiniciarJuego");
         btnJugar?.addEventListener("click", () => {
-          this.render()
-          this.gameLogic()
+          this.render();
+          this.gameLogic();
           this.temporizadorCom(5);
         });
       }
     }
   }
-
 }
 
 customElements.define("game-com", gameCom);

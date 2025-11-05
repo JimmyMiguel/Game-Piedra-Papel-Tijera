@@ -1,5 +1,6 @@
 import { goTo } from "../router";
 import { state } from "../state";
+import winImage from "../assets/win.jpg";
 import "../pages/game";
 class GameOverScreen extends HTMLElement {
   // Propiedades que se pueden configurar a través de atributos HTML
@@ -50,7 +51,7 @@ class GameOverScreen extends HTMLElement {
               justify-content: space-around;
               gap: 2rem;
               background-repeat: round;
-              background-image: url('/src/assets/win.jpg');
+              background-image: url(${winImage});
               padding: 0rem;
               height: 100%;
           }
@@ -154,13 +155,11 @@ class GameOverScreen extends HTMLElement {
     });
   }
 
-  private aplicarEstilos(){
-
-     const resultadoActual = state.resultado;
+  private aplicarEstilos() {
+    const resultadoActual = state.resultado;
     if (resultadoActual === "Ganaste") {
-      const divWin = this.shadowRoot?.querySelector(".star-container")
-      divWin?.classList.add("win")
-      
+      const divWin = this.shadowRoot?.querySelector(".star-container");
+      divWin?.classList.add("win");
     }
   }
 }

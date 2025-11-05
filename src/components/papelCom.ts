@@ -1,20 +1,19 @@
+import papelImage from "../assets/papel.png";
+
 export class papelCom extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
 
-    constructor(){
-        super()
-        this.attachShadow({mode:"open"})
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    connectedCallback(){
-        this.render()
+  render() {
+    if (!this.shadowRoot) return;
 
-    }
-
-
-    render(){
-        if(!this.shadowRoot) return
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
          <style>
                  :host {
           box-sizing: border-box;
@@ -37,10 +36,10 @@ export class papelCom extends HTMLElement {
             }
         </style>
         <div class="img-container">
-            <img src="/src/assets/papel.png" alt="Piedra" />
+            <img src="${papelImage}" alt="Papel" />
         </div>
-        `
-    }
+        `;
+  }
 }
 
-customElements.define("papel-com", papelCom)
+customElements.define("papel-com", papelCom);

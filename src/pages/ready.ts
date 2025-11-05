@@ -1,5 +1,6 @@
 import { goTo } from "../router";
-import "../components/botonCom"
+import "../components/botonCom";
+import fondoAzul from "../assets/fondo-azul.jpg";
 
 export class readyCom extends HTMLElement {
   constructor() {
@@ -25,7 +26,7 @@ export class readyCom extends HTMLElement {
             height: 100vh;
              font-family: "Odibee Sans", sans-serif;
             letter-spacing: 4px;
-            background-image: url('/src/assets/fondo-azul.jpg');
+            background-image: url(${fondoAzul});
             background-repeat: round;
             display: flex;
             flex-direction: column;
@@ -74,8 +75,7 @@ export class readyCom extends HTMLElement {
 
     const startButton = this.shadowRoot.querySelector("#startBtn");
     startButton?.addEventListener("click", () => {
-      goTo("/gameCom")
-
+      goTo("/gameCom");
     });
   }
 }

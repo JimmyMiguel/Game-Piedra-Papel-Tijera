@@ -1,20 +1,19 @@
+import tijeraImage from "../assets/tijera.png";
+
 export class tijeraCom extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
 
-    constructor(){
-        super()
-        this.attachShadow({mode:"open"})
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    connectedCallback(){
-        this.render()
+  render() {
+    if (!this.shadowRoot) return;
 
-    }
-
-
-    render(){
-        if(!this.shadowRoot) return
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
          <style>
                  :host {
           box-sizing: border-box;
@@ -35,10 +34,10 @@ export class tijeraCom extends HTMLElement {
             }
         </style>
         <div class="img-container">
-            <img src="/src/assets/tijera.png" alt="Piedra" />
+            <img src="${tijeraImage}" alt="Tijera" />
         </div>
-        `
-    }
+        `;
+  }
 }
 
-customElements.define("tijera-com", tijeraCom)
+customElements.define("tijera-com", tijeraCom);

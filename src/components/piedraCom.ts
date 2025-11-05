@@ -1,20 +1,19 @@
+import piedraImage from "../assets/piedra.png";
+
 export class piedraCom extends HTMLElement {
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
 
-    constructor(){
-        super()
-        this.attachShadow({mode:"open"})
-    }
+  connectedCallback() {
+    this.render();
+  }
 
-    connectedCallback(){
-        this.render()
+  render() {
+    if (!this.shadowRoot) return;
 
-    }
-
-
-    render(){
-        if(!this.shadowRoot) return
-
-        this.shadowRoot.innerHTML = `
+    this.shadowRoot.innerHTML = `
          <style>
                  :host {
           box-sizing: border-box;
@@ -36,10 +35,10 @@ export class piedraCom extends HTMLElement {
             }
         </style>
         <div class="img-container">
-            <img src="/src/assets/piedra.png" alt="Piedra" />
+            <img src="${piedraImage}" alt="Piedra" />
         </div>
-        `
-    }
+        `;
+  }
 }
 
-customElements.define("piedra-com", piedraCom)
+customElements.define("piedra-com", piedraCom);
