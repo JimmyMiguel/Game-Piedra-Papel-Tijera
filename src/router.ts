@@ -9,6 +9,7 @@ type Route = {
 };
 
 //todas las rutas
+// Base path debe ser el path dentro del pathname (ruta del repo), no el dominio
 const BASE_PATH = "/Game-Piedra-Papel-Tijera";
 
 const routes: Route[] = [
@@ -63,8 +64,15 @@ export function handleRoute(path: string) {
 }
 
 export function goTo(path: string) {
-  history.pushState({}, "", path);
-  handleRoute(path);
+  // Acepta rutas relativas ("/readycom") o absolutas. Si la ruta no contiene
+  // el BASE_PATH, la prefijamos automáticamente para que las llamadas existentes
+  // como goTo('/readycom') sigan funcionando en GitHub Pages.
+  let fullPath = path;
+  if (!path.startsWith(BASE_PATH)) {
+    fullPath = path.startsWith("/") ? BASE_PATH + path : BASE_PATH + "/" + path;
+  }
+  history.pushState({}, "", fullPath);
+  handleRoute(fullPath);
 }
 
 //funtion para iniciar ruta
